@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User as UserIcon, Calendar, ArrowLeft, MessageSquare, Award, Zap, Star, Shield } from 'lucide-react';
+import { User as UserIcon, ArrowLeft, MessageSquare, Award, Zap, Star, Shield } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { postService, userService } from '../services/api';
 import PostCard from '../components/PostCard';

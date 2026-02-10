@@ -1,6 +1,5 @@
 :root {
   --primary: #5178C3;
-  /* Azul Orkut */
   --primary-hover: #3b5ca0;
   --bg-dark: #cbd5e1;
   /* Base para o efeito vidro */
@@ -9,7 +8,6 @@
   --text-main: #1e293b;
   --text-secondary: #5178C3;
   --accent: #FF6600;
-  /* Laranja Orkut */
   --bg-gradient: radial-gradient(at 0% 0%, rgba(81, 120, 195, 0.25) 0, transparent 50%),
     linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
   --card-blur: 16px;

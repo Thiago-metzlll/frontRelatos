@@ -97,7 +97,6 @@ function App() {
         </button>
         {isRegistering ? (
           <RegisterPage
-            onSuccess={() => { setIsRegistering(false); }}
             onBackToLogin={() => setIsRegistering(false)}
           />
         ) : (

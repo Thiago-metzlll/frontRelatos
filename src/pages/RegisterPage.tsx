@@ -3,11 +3,10 @@ import { useAuth } from '../contexts/AuthContext';
 import { UserPlus, Mail, Lock, User as UserIcon, ArrowLeft } from 'lucide-react';
 
 interface RegisterPageProps {
-    onSuccess: () => void;
     onBackToLogin: () => void;
 }
 
-const RegisterPage: React.FC<RegisterPageProps> = ({ onSuccess, onBackToLogin }) => {
+const RegisterPage: React.FC<RegisterPageProps> = ({ onBackToLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
