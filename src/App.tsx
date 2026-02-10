@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlusCircle, Search, LogOut, User as UserIcon, Sparkles } from 'lucide-react';
+import { PlusCircle, Search, LogOut, User as UserIcon } from 'lucide-react';
 import PostCard from './components/PostCard';
 import { postService } from './services/api';
 import { useAuth } from './contexts/AuthContext';
@@ -131,7 +131,7 @@ function App() {
             gap: '10px'
           }}
         >
-          <Sparkles size={24} /> Relatos Random
+          Relatos Random
         </h1>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <button

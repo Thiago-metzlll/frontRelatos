@@ -4,15 +4,24 @@ import { useAuth } from '../contexts/AuthContext';
 import { postService, userService } from '../services/api';
 import PostCard from '../components/PostCard';
 
+// Background Images from Assets
+import bgNebulosa from '../assets/Gemini_Generated_Image_6bgs3z6bgs3z6bgs.png';
+import bgAurora from '../assets/Gemini_Generated_Image_ds94iyds94iyds94.png';
+import bgCosmos from '../assets/Gemini_Generated_Image_mvqhn1mvqhn1mvqh.png';
+import { useTheme } from '../contexts/ThemeContext';
+import { Palette, Image as ImageIcon } from 'lucide-react';
+
 interface ProfilePageProps {
     onBack: () => void;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ onBack }) => {
     const { user } = useAuth();
+    const { theme, setTheme, bgImage, setBgImage } = useTheme();
     const [myPosts, setMyPosts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+    const [showBgPicker, setShowBgPicker] = useState(false);
 
     // Mock avatars (the user mentioned putting them in assets)
     const availableAvatars = [
@@ -22,6 +31,21 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onBack }) => {
         'https://api.dicebear.com/7.x/avataaars/svg?seed=Zoey',
         'https://api.dicebear.com/7.x/avataaars/svg?seed=Leo',
     ];
+
+    const backgroundImages = [
+        { name: 'Nebulosa Azul', url: bgNebulosa },
+        { name: 'Aurora Etérea', url: bgAurora },
+        { name: 'Cosmos Vibrante', url: bgCosmos },
+    ];
+
+    const themesList = [
+        { id: 'default', name: 'Padrão (Amarelo)', color: '#facc15' },
+        { id: 'mystic', name: 'Místico (Vermelho)', color: '#991b1b' },
+        { id: 'tech', name: 'Tech (Magenta)', color: '#d946ef' },
+        { id: 'orkut', name: 'Nostalgia (Azul)', color: '#2563eb' },
+        { id: 'nature', name: 'Natureza (Verde)', color: '#22c55e' },
+        { id: 'ocean', name: 'Oceano (Ciano)', color: '#06b6d4' },
+    ] as const;
 
     const handleAvatarSelect = async (avatar: string) => {
         try {
@@ -274,6 +298,141 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ onBack }) => {
                         </div>
                     </div>
                 </div>
+
+                {/* Seção de Personalização */}
+                <div style={{ borderTop: '1px solid var(--glass-border)', marginTop: '2rem', paddingTop: '2rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                        {/* Temas */}
+                        <div>
+                            <h4 style={{ fontSize: '1rem', marginBottom: '1.2rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Palette size={18} /> Tema Visual
+                            </h4>
+                            <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+                                {themesList.map(t => (
+                                    <button
+                                        key={t.id}
+                                        onClick={() => setTheme(t.id)}
+                                        style={{
+                                            padding: '8px 16px',
+                                            borderRadius: '12px',
+                                            background: theme === t.id ? t.color : 'rgba(0,0,0,0.05)',
+                                            border: `1px solid ${t.color}${theme === t.id ? '' : '44'}`,
+                                            color: theme === t.id ? '#0f172a' : 'var(--text-main)',
+                                            fontSize: '0.85rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s'
+                                        }}
+                                    >
+                                        {t.name}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Imagem de Fundo */}
+                        <div>
+                            <h4 style={{ fontSize: '1rem', marginBottom: '1.2rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <ImageIcon size={18} /> Imagem de Fundo
+                            </h4>
+                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                <button
+                                    onClick={() => setShowBgPicker(true)}
+                                    className="button-primary"
+                                    style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+                                >
+                                    {bgImage ? 'Mudar Fundo' : 'Escolher Fundo'}
+                                </button>
+                                {bgImage && (
+                                    <button
+                                        onClick={() => setBgImage(null)}
+                                        style={{
+                                            background: 'none',
+                                            border: '1px solid var(--text-secondary)',
+                                            color: 'var(--text-main)',
+                                            padding: '8px 16px',
+                                            borderRadius: '8px',
+                                            fontSize: '0.85rem',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Remover
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Modal Picker para Background */}
+                {showBgPicker && (
+                    <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        background: 'rgba(var(--bg-dark), 0.95)',
+                        backdropFilter: 'blur(10px)',
+                        zIndex: 20,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '2rem'
+                    }}>
+                        <h4 style={{ color: 'var(--text-main)', marginBottom: '1.5rem', fontSize: '1.5rem' }}>Escolha o seu Fundo</h4>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '1.5rem', width: '100%', maxWidth: '500px' }}>
+                            {backgroundImages.map((bg, i) => (
+                                <div
+                                    key={i}
+                                    onClick={() => { setBgImage(bg.url); setShowBgPicker(false); }}
+                                    style={{
+                                        aspectRatio: '16/9',
+                                        borderRadius: '12px',
+                                        background: 'rgba(255,255,255,0.05)',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s',
+                                        border: bgImage === bg.url ? '3px solid var(--primary)' : '2px solid rgba(255,255,255,0.1)',
+                                        overflow: 'hidden',
+                                        position: 'relative'
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                >
+                                    <img src={bg.url} alt={bg.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    <div style={{
+                                        position: 'absolute',
+                                        bottom: 0,
+                                        width: '100%',
+                                        background: 'rgba(0,0,0,0.6)',
+                                        color: 'white',
+                                        fontSize: '0.7rem',
+                                        padding: '4px',
+                                        textAlign: 'center'
+                                    }}>
+                                        {bg.name}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <button
+                            onClick={() => setShowBgPicker(false)}
+                            style={{
+                                marginTop: '2.5rem',
+                                background: 'none',
+                                border: '1px solid var(--text-secondary)',
+                                color: 'var(--text-main)',
+                                padding: '10px 24px',
+                                borderRadius: '12px',
+                                cursor: 'pointer',
+                                fontWeight: '600'
+                            }}
+                        >
+                            Fechar
+                        </button>
+                    </div>
+                )}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
