@@ -31,5 +31,10 @@ export const commentService = {
 export const authService = {
     login: (data: any) => api.post('/auth/login', data),
     register: (data: any) => api.post('/auth/register', data),
+    getProfile: () => api.get('/auth/me'),
     logout: () => api.post('/auth/logout'),
+};
+
+export const userService = {
+    updateProfile: (data: { avatarUrl?: string; nome?: string }) => api.patch('/users/profile', data),
 };
