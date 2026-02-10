@@ -1,19 +1,23 @@
 :root {
-  --primary: #5178C3;
-  --primary-hover: #3b5ca0;
-  --bg-dark: #cbd5e1;
-  /* Base para o efeito vidro */
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(81, 120, 195, 0.2);
-  --text-main: #1e293b;
-  --text-secondary: #5178C3;
-  --accent: #FF6600;
-  --bg-gradient: radial-gradient(at 0% 0%, rgba(81, 120, 195, 0.25) 0, transparent 50%),
-    linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  --primary: #facc15;
+  /* Amarelo Vibrante */
+  --primary-hover: #eab308;
+  --bg-dark: #0f172a;
+  /* Azul Escuro (Slate/Navy) */
+  --card-bg: rgba(30, 41, 59, 0.7);
+  /* Azul levemente mais claro para cards */
+  --glass-border: rgba(250, 204, 21, 0.2);
+  /* Borda levemente amarelada */
+  --text-main: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #facc15;
+  --bg-gradient: radial-gradient(at 0% 0%, rgba(15, 23, 42, 1) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(30, 41, 59, 1) 0, transparent 50%),
+    linear-gradient(135deg, #020617 0%, #0f172a 100%);
   --card-blur: 16px;
-  --font-main: 'Verdana', sans-serif;
-  --font-heading: 'Verdana', sans-serif;
-  --noise-opacity: 0.02;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --noise-opacity: 0.03;
 }
 
 /* Tema Misterioso (História/Crônicas) */
@@ -96,11 +100,12 @@ h3 {
 
 .button-primary {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-  color: white;
+  color: #0f172a;
+  /* Texto escuro para contrastar com amarelo */
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: opacity 0.2s, transform 0.2s;
 }
@@ -118,7 +123,8 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(var(--bg-dark), 0.8);
+  background: rgba(15, 23, 42, 0.8);
+  /* Usando o valor de --bg-dark */
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--glass-border);
   transition: background 0.5s ease, border 0.5s ease;
@@ -131,12 +137,12 @@ h3 {
 }
 
 .category-badge {
-  background: rgba(var(--primary), 0.2);
+  background: rgba(250, 204, 21, 0.1);
   color: var(--primary);
-  padding: 4px 12px;
+  padding: 6px 16px;
   border-radius: 99px;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
   border: 1px solid var(--glass-border);
   cursor: pointer;
   transition: all 0.2s;
@@ -144,5 +150,5 @@ h3 {
 
 .category-badge.active {
   background: var(--primary);
-  color: white;
+  color: #0f172a;
 }
