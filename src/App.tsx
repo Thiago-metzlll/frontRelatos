@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import CreatePostModal from './components/CreatePostModal';
+import FloatingBotMenu from './components/FloatingBotMenu';
 
 function App() {
   const { user, logout, loading } = useAuth();
@@ -52,10 +53,21 @@ function App() {
     setActiveCategoryId(categoryId);
     fetchPosts(categoryId);
 
+    const body = document.body;
+    body.classList.remove('overlay-scary', 'overlay-aged');
+
+    const name = categoryName.toLowerCase();
+
     // Dynamic Theme change
-    if (categoryName.toLowerCase().includes('tech')) {
+    if (name.includes('tech') || name.includes('tecno')) {
       setTheme('tech');
-    } else if (categoryName.toLowerCase().includes('experiência') || categoryName.toLowerCase().includes('história')) {
+    } else if (name.includes('sombria') || name.includes('terror') || name.includes('horror') || name.includes('medo')) {
+      setTheme('mystic');
+      body.classList.add('overlay-scary');
+    } else if (name.includes('aventura') || name.includes('velho') || name.includes('antigo') || name.includes('vintage')) {
+      setTheme('default');
+      body.classList.add('overlay-aged');
+    } else if (name.includes('experiência') || name.includes('história') || name.includes('conto')) {
       setTheme('mystic');
     } else {
       setTheme('default');
@@ -82,12 +94,19 @@ function App() {
     }
   };
 
+  const wrapLayout = (content: React.ReactNode) => (
+    <div className="app-layout">
+      {content}
+      <FloatingBotMenu />
+    </div>
+  );
+
   if (loading) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white' }}>Carregando...</div>;
   }
 
   if (showLogin && !user) {
-    return (
+    return wrapLayout(
       <div style={{ padding: '2rem' }}>
         <button
           onClick={() => { setShowLogin(false); setIsRegistering(false); }}
@@ -110,10 +129,10 @@ function App() {
   }
 
   if (showProfile && user) {
-    return <ProfilePage onBack={() => setShowProfile(false)} />;
+    return wrapLayout(<ProfilePage onBack={() => setShowProfile(false)} />);
   }
 
-  return (
+  return wrapLayout(
     <div>
       <nav className="nav">
         <h1
